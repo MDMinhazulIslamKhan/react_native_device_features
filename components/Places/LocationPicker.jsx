@@ -8,7 +8,9 @@ import {
   PermissionStatus,
   useForegroundPermissions,
 } from "expo-location";
+import { useNavigation } from "@react-navigation/native";
 const LocationPicker = () => {
+  const navigation = useNavigation();
   const [locationPermissionInfo, requestPermission] =
     useForegroundPermissions();
   const [pickedLocation, setPickedLocation] = useState(false);
@@ -69,7 +71,9 @@ const LocationPicker = () => {
       longitude: location?.coords?.longitude,
     });
   };
-  const picLocationOnMapHandler = () => {};
+  const picLocationOnMapHandler = () => {
+    navigation.navigate("Map");
+  };
   return (
     <View>
       <View style={styles.mapPreview}>{mapPreview}</View>
