@@ -30,7 +30,8 @@ const PlaceForm = ({ onCreatePlace }) => {
   }, []);
 
   const savePlaceHandler = () => {
-    if (!enteredText || !selectImage || !pickedLocation) {
+    // if (!enteredText || !selectImage || !pickedLocation) {
+    if (!enteredText || !pickedLocation) {
       Alert.alert("Invalid Input", "Please fill the form...");
       return;
     }
