@@ -6,19 +6,6 @@ import MapView, { Marker } from "react-native-maps";
 const Map = ({ navigation }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: ({ tintColor }) => (
-        <IconButton
-          icon="save"
-          size={24}
-          color={tintColor}
-          onPress={saveLocationHandler}
-        />
-      ),
-    });
-  }, [navigation, saveLocationHandler]);
-
   const region = {
     latitude: 23.7130245,
     longitude: 90.3955051,
@@ -47,6 +34,19 @@ const Map = ({ navigation }) => {
       return;
     }
     navigation.navigate("AddPlaces", { pickedLocation: selectedLocation });
+  }, [selectedLocation]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: ({ tintColor }) => (
+        <IconButton
+          icon="save"
+          size={24}
+          color={tintColor}
+          onPress={saveLocationHandler}
+        />
+      ),
+    });
   }, [navigation, saveLocationHandler]);
 
   return (

@@ -1,6 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Colors } from "../../constant/colors";
 import ButtonOutline from "../ui/ButtonOutline";
 import {
@@ -8,12 +8,29 @@ import {
   PermissionStatus,
   useForegroundPermissions,
 } from "expo-location";
-import { useNavigation } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useIsFocused,
+} from "@react-navigation/native";
 const LocationPicker = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const isFocused = useIsFocused();
+
+  const [pickedLocation, setPickedLocation] = useState(false);
   const [locationPermissionInfo, requestPermission] =
     useForegroundPermissions();
-  const [pickedLocation, setPickedLocation] = useState(false);
+
+  useEffect(() => {
+    if (isFocused && route.params) {
+      const mapPickedLocation = {
+        latitude: route.params?.pickedLocation?.latitude,
+        longitude: route.params?.pickedLocation?.longitude,
+      };
+      setPickedLocation(mapPickedLocation);
+    }
+  }, [route, isFocused]);
 
   const verifyPermission = async () => {
     if (locationPermissionInfo.status === PermissionStatus.UNDETERMINED) {
