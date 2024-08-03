@@ -8,7 +8,7 @@ import {
 import { Colors } from "../../constant/colors";
 import ButtonOutline from "../ui/ButtonOutline";
 
-const ImagePicker = () => {
+const ImagePicker = ({ onTakeImage }) => {
   const [cameraPermissionInfo, requestPermission] = useCameraPermissions();
   const [pickedImage, setPickedImage] = useState();
 
@@ -39,6 +39,7 @@ const ImagePicker = () => {
       quality: 0.5,
     });
     setPickedImage(image.assets[0].uri);
+    onTakeImage(image.assets[0].uri);
   };
 
   let imagePreview = <Text>No image taken yet.</Text>;
@@ -46,6 +47,20 @@ const ImagePicker = () => {
   if (pickedImage) {
     imagePreview = <Image style={styles.image} source={{ uri: pickedImage }} />;
   }
+  /*
+  
+    if (!pickedImage) {
+    imagePreview = (
+      <Image
+        style={styles.image}
+        source={{
+          uri: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Freact_native_device_features-71405b16-fda1-4b73-b66d-8adfb0a8231b/ImagePicker/f2b7be11-3bca-4ed2-bcad-f4aac0738f61.jpeg",
+        }}
+      />
+    );
+  }
+  
+  */
   return (
     <View>
       <View style={styles.imagePreview}>{imagePreview}</View>

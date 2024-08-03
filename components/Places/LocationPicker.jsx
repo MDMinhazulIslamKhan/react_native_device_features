@@ -13,7 +13,7 @@ import {
   useRoute,
   useIsFocused,
 } from "@react-navigation/native";
-const LocationPicker = () => {
+const LocationPicker = ({ onPickLocation }) => {
   const navigation = useNavigation();
   const route = useRoute();
   const isFocused = useIsFocused();
@@ -31,6 +31,13 @@ const LocationPicker = () => {
       setPickedLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
+
+  useEffect(() => {
+    if (pickedLocation) {
+      pickedLocation.address = "Address দেখার ট্যাহা নাই...";
+      onPickLocation(pickedLocation);
+    }
+  }, [pickedLocation, onPickLocation]);
 
   const verifyPermission = async () => {
     if (locationPermissionInfo.status === PermissionStatus.UNDETERMINED) {
